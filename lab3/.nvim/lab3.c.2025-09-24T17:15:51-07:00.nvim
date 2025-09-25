@@ -1,0 +1,32 @@
+#define _POSIX_C_Source 200809L
+#define SIZE 5
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+  size_t len[SIZE] = {0}, i = 0;
+  char *line[SIZE] = {NULL};
+
+  while (printf("Enter input: ") && getline(line + i, len + i, stdin) != -1) {
+    if (!strcmp(line[i], "print\n")) {
+      size_t j = i = (i + 1) % SIZE;
+
+      do {
+        if (line[j]) {
+          printf("%s", line[j]);
+        }
+        j = (j + 1) % SIZE;
+      } while (j != i);
+
+      continue;
+    }
+    i = (i + 1) % SIZE;
+  }
+
+  for (i = 0; i < SIZE; i++) {
+    free(line[i]);
+  }
+
+  return 0;
+}
